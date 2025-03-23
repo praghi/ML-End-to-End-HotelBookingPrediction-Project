@@ -7,7 +7,7 @@ conda activate hotelbooking
 pip install -r requirements.txt
 
 
-2. Steps to Commit Code in Git
+## 2. Steps to Commit Code in Git
 Initialize Git Repository (If Not Already Initialized) 
 git init
 
