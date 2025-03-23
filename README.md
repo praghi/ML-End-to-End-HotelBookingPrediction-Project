@@ -8,7 +8,7 @@ pip install-r requirements.txt
 
 ## Steps to Commit Code in Git
 
-### 1. Initialize Git Repository (If Not Already Initialized)
+1. Initialize Git Repository (If Not Already Initialized)
 ```bash
 git init
 
@@ -34,7 +34,8 @@ git commit -m "Your meaningful commit message here"
 git push -u origin main
 
 7. If using a different branch: 
-```bash  # To push to another branch, replace "main 
+```bash 
+# To push to another branch, replace "main 
 git push origin <branch-name>
 
 8. Pull Latest Changes Before Pushing (To Avoid Merge Conflicts)
