@@ -1,0 +1,10 @@
+scikit-learn
+xgboost
+nltk
+pandas
+matplotlib
+streamlit 
+numpy
+dvc
+PyYAML
+-e .
