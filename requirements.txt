@@ -4,6 +4,7 @@ nltk
 pandas
 matplotlib
 streamlit 
+seaborn
 numpy
 dvc
 PyYAML
