@@ -1,6 +1,8 @@
 # ML End-to-End Hotel Booking Project
 
 ## 1. Create the Conda Environment  
+
+
 ```bash
 conda create -n hotelbooking python=3.11 -y
 conda activate hotelbooking
@@ -8,10 +10,17 @@ pip install -r requirements.txt
 
 
 ## 2. Steps to Commit Code in Git
+
 Initialize Git Repository (If Not Already Initialized) 
+
+
+```bash
+
 git init
 
 Check the Status of Your Changes
+
+
 git status
 
 Stage Files for Commit
