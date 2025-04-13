@@ -17,7 +17,6 @@ st.set_page_config(page_title="Overview", page_icon="📊", layout="wide")
 # Paths for model and data
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 METRICS_PATH = os.path.join(PROJECT_ROOT, "metrics.json")
-MODEL_PATH = os.path.join(PROJECT_ROOT, "model.pkl")
 TEST_DATA_PATH = os.path.join(PROJECT_ROOT, "data", "features", "test_features.csv")
 
 
@@ -34,19 +33,26 @@ def load_test_data():
     y_test = test_data.iloc[:, -1].values   # Target
     return X_test, y_test
 
-
 def load_model():
-    with open(MODEL_PATH, 'rb') as file:
-        loaded_object = pickle.load(file)
-    
-    print("Loaded Object Type:", type(loaded_object))
-    
-    if isinstance(loaded_object, tuple) and len(loaded_object) == 2:
-        model, scaler = loaded_object
-    else:
-        raise ValueError("Unexpected content in the pickle file. Expected a tuple with (model, scaler).")
-    
-    return model, scaler
+        # Get the parent directory (main directory)
+    base_dir =  PROJECT_ROOT # Go up one level
+    model_path = os.path.join(base_dir, "model.pkl")  # Use "model.pkl" in the main directory
+    scaler_path = os.path.join(base_dir,"scaler.pkl")
+
+    if not os.path.exists(model_path):
+        raise FileNotFoundError(f"🚨 Model file '{model_path}' not found!")
+    if not os.path.exists(scaler_path):
+        raise FileNotFoundError(f"🚨 Scaler file '{scaler_path}' not found!")
+
+    # Load model
+    with open(model_path, 'rb') as f_model:
+        xgb_model = pickle.load(f_model)
+
+    # Load scaler
+    with open(scaler_path, 'rb') as f_scaler:
+        scaler = pickle.load(f_scaler)
+
+    return xgb_model, scaler
 
 
 def evaluate_model(xgb_model, X_test, y_test):
