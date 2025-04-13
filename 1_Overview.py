@@ -7,9 +7,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.metrics import confusion_matrix, classification_report, roc_curve, auc
+  # Import the prediction page function
 
-# Set Streamlit page config
-st.set_page_config(page_title="Model Overview", layout="wide")
+# Set Streamlit page configuration
+st.set_page_config(page_title="Overview", page_icon="📊", layout="wide")
+
+
 
 # Paths for model and data
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -33,8 +36,17 @@ def load_test_data():
 
 
 def load_model():
-    """Load trained model."""
-    return pickle.load(open(MODEL_PATH, "rb"))
+    with open(MODEL_PATH, 'rb') as file:
+        loaded_object = pickle.load(file)
+    
+    print("Loaded Object Type:", type(loaded_object))
+    
+    if isinstance(loaded_object, tuple) and len(loaded_object) == 2:
+        model, scaler = loaded_object
+    else:
+        raise ValueError("Unexpected content in the pickle file. Expected a tuple with (model, scaler).")
+    
+    return model, scaler
 
 
 def evaluate_model(xgb_model, X_test, y_test):
@@ -219,7 +231,7 @@ def main():
     display_custom_css()  # Apply CSS
     metrics = load_metrics()
     X_test, y_test = load_test_data()
-    xgb_model = load_model()
+    xgb_model, scalar = load_model()
     
     y_pred, y_pred_proba, conf_matrix, fpr, tpr, roc_auc, class_report = evaluate_model(xgb_model, X_test, y_test)
 

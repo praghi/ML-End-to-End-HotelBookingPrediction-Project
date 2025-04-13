@@ -22,10 +22,7 @@ def load_data(data_path=DATA_DIR) -> tuple:
 
 def transform_data(train_df: pd.DataFrame, test_df: pd.DataFrame) -> tuple:
     """Standardizes numerical features and encodes categorical columns."""
-    scaler = StandardScaler()
-
     for df in [train_df, test_df]:
-        df[['lead_time', 'avg_price_per_room']] = scaler.fit_transform(df[['lead_time', 'avg_price_per_room']])
         df['booking_status'] = df['booking_status'].map({'Not_Canceled': 0, 'Canceled': 1})
 
     return train_df, test_df

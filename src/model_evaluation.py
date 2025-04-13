@@ -7,10 +7,17 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, roc_a
 
 # Get project root (where main.py is located)
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+print(PROJECT_ROOT)
 
 # Load trained model from the main project directory
 model_path = os.path.join(PROJECT_ROOT, "model.pkl")
-xgb_model = pickle.load(open(model_path, "rb"))
+loaded_obj = pickle.load(open(model_path, "rb"))
+
+# Unpack the tuple if necessary
+if isinstance(loaded_obj, tuple):
+    xgb_model, scaler = loaded_obj
+else:
+    xgb_model = loaded_obj
 
 # Load test data from the correct path
 test_data_path = os.path.join(PROJECT_ROOT, "data", "features", "test_features.csv")

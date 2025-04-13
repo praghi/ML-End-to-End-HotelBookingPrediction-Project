@@ -1,9 +1,13 @@
 import os
+import pickle
 import pandas as pd
+from sklearn.preprocessing import StandardScaler
+
 # Automatically detect project root directory
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROCESSED_DIR = os.path.join(PROJECT_ROOT, "data", "processed")
 FEATURES_DIR = os.path.join(PROJECT_ROOT, "data", "features")
+
 
 def load_transformed_data(data_path=PROCESSED_DIR):
     """Loads transformed train and test data from processed directory."""
@@ -11,7 +15,7 @@ def load_transformed_data(data_path=PROCESSED_DIR):
     test_path = os.path.join(data_path, "test_transformed.csv")
 
     if not os.path.exists(train_path) or not os.path.exists(test_path):
-        raise FileNotFoundError("Error: Transformed data files are missing!")
+        raise FileNotFoundError("❌ Transformed data files are missing!")
 
     train_df = pd.read_csv(train_path)
     test_df = pd.read_csv(test_path)
@@ -20,11 +24,21 @@ def load_transformed_data(data_path=PROCESSED_DIR):
 
 def feature_engineering(train_df: pd.DataFrame, test_df: pd.DataFrame):
     """Performs feature selection and engineering."""
-    
+
     # Drop irrelevant columns
     cols_to_drop = ['booking_id', 'arrival_year', 'arrival_month', 'arrival_date']
-    train_df = train_df.drop(columns=[col for col in cols_to_drop if col in train_df.columns], errors='ignore')
-    test_df = test_df.drop(columns=[col for col in cols_to_drop if col in test_df.columns], errors='ignore')
+    train_df.drop(columns=[col for col in cols_to_drop if col in train_df.columns], inplace=True, errors='ignore')
+    test_df.drop(columns=[col for col in cols_to_drop if col in test_df.columns], inplace=True, errors='ignore')
+
+    # Standardization of numerical columns
+    num_cols = ['lead_time', 'avg_price_per_room']
+    scaler = StandardScaler()
+    train_df[num_cols] = scaler.fit_transform(train_df[num_cols])
+    test_df[num_cols] = scaler.transform(test_df[num_cols])  # Use the same scaler
+
+    # Save the trained scaler
+    with open(os.path.join(PROJECT_ROOT, "scaler.pkl"), "wb") as f:
+        pickle.dump(scaler, f)
 
     # Convert categorical features to strings (ensuring uniformity)
     categorical_cols = ['type_of_meal_plan', 'room_type_reserved', 'market_segment_type']
@@ -43,12 +57,11 @@ def feature_engineering(train_df: pd.DataFrame, test_df: pd.DataFrame):
 
     test_df = test_df[train_df.columns]  # Reorder columns to match train_df
 
-    # Handle missing values after encoding
-    train_df.fillna(train_df.median(), inplace=True)
-    test_df.fillna(test_df.median(), inplace=True)
+    # Save the column names (for future alignment in prediction)
+    with open(os.path.join(PROJECT_ROOT, "columns.pkl"), "wb") as f:
+        pickle.dump(train_df.columns.tolist(), f)
 
     return train_df, test_df
-
 
 def save_features(train_df: pd.DataFrame, test_df: pd.DataFrame, output_path=FEATURES_DIR):
     """Saves feature-selected data in the features directory."""
@@ -71,5 +84,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
