@@ -1,50 +1,70 @@
-# ML End-to-End Hotel Booking Project
-
-1. Create the Conda Environment  
-
-```bash
-conda create -n hotelbooking python=3.11 -y
-conda activate hotelbooking
-pip install -r requirements.txt
+# 🏨 Hotel Booking Cancellation Prediction - ML App (End-to-End)
+This project is an end-to-end machine learning application to predict whether a hotel booking will be canceled or not, based on customer and booking details. It's built using Python, Scikit-learn/XGBoost, and Streamlit for deployment.
 
 
-2. Steps to Commit Code in Git
+## 💡 Problem Statement
+The goal is to classify hotel bookings as:
+Canceled (label = 1)
+Not Canceled (label = 0)
+by analyzing customer behavior and booking features, this model can help hotels proactively manage inventory and reduce cancellations.
 
-Initialize Git Repository (If Not Already Initialized) 
-git init
+## 🔍 Features
+- 📊 Exploratory Data Analysis (EDA)
+- 🧹 Data Preprocessing (handling missing data, encoding, scaling)
+- 📦 Model Training (XGBoost, Logistic Regression, etc.)
+- ✅ Evaluation (Confusion Matrix, ROC-AUC, F1-Score)
+- 💾 Model & Scaler Saving (model.pkl, scaler.pkl)
+- 🖥️ Final App Deployment using Streamlit
+- 🔐 Secrets management using .env or Azure Key Vault
 
-Check the Status of Your Changes
-git status
+## 📷 Final Streamlit App Output
 
-Stage Files for Commit
-To stage all changes:
-git add .
+- Overview Page:  https://praghi-ml-end-to-end-hotelbookingprediction.streamlit.app/
+- Prediction Page: https://praghi-ml-end-to-end-hotelbookingprediction.streamlit.app/Prediction
 
-Commit Changes with a Meaningful Message
-git commit -m "Your meaningful commit message here"
 
-Connect to a Remote Repository (If Not Already Connected)
-git remote add origin <your-repository-URL>
+## Installation
 
-Push Changes to Remote Repository
-To push to the main branch:
-git push -u origin main
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/praghi/ML-End-to-End-HotelBookingPrediction-Project.git
 
-To push to a different branch:
-git push origin <branch-name>
+2. 🔧 Initialize Git Repository (If Not Already Initialized)
+   ```bash
+   git init
 
-Pull Latest Changes Before Pushing (To Avoid Merge Conflicts)
-git pull origin main --rebase
+3. 📋 Check the Status of Your Changes
+   ```bash
+   git status
 
-Create and Switch to a New Branch (If Needed)
-git checkout -b <new-branch-name>
+4. ✅ Stage Files for Commit
+   ```bash
+   git add . 
 
-Merge a Branch into Main
-First, switch to the main branch:
+5. 💬 Commit Changes with a Meaningful Message
+   ```bash
+   git commit -m "Your meaningful commit message here"
+
+6. 🔗 Connect to a Remote Repository (If Not Already Connected)
+    ```bash
+    git remote add origin <your repo>
+
+7. ⬆️ Push Changes to Remote Repository
+    ```bash
+    To push to the main branch:
+    git push -u origin main
+
+8. ⬇️ Pull Latest Changes Before Pushing (To Avoid Merge Conflicts)
+    ```bash
+    git pull origin main --rebase
+
+10. 🌿 Create and Switch to a New Branch (If Needed)
+   ```bash
+    git checkout -b feature-branch-name
+
+🔄 Merge a Branch into Main
+Switch to the main branch:
 git checkout main
 
-Then, merge the branch:
-git merge <branch-name>
-
-
-
+Merge your branch:
+git merge feature-branch-name
