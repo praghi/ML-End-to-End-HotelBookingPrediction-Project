@@ -7,7 +7,7 @@ from sklearn.preprocessing import LabelEncoder , StandardScaler
 #from pymongo.server_api import ServerApi
 #from urllib.parse import quote_plus
 import os 
-from dotenv import load_dotenv 
+#from dotenv import load_dotenv 
 
 
 def load_model():
