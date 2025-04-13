@@ -3,9 +3,9 @@ import pandas as pd
 import numpy as np 
 import pickle 
 from sklearn.preprocessing import LabelEncoder , StandardScaler
-from pymongo.mongo_client import MongoClient
-from pymongo.server_api import ServerApi
-from urllib.parse import quote_plus
+#from pymongo.mongo_client import MongoClient
+#from pymongo.server_api import ServerApi
+#from urllib.parse import quote_plus
 import os 
 from dotenv import load_dotenv 
 
